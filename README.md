@@ -8,40 +8,80 @@ This code implements the Double Neural Network (Double-NN) method for individual
 Sehwan Kim, and Faming Liang (2025+), [Extended Fiducial Inference for Individual Treatment Effects via Deep Neural Networks](https://arxiv.org/abs/2407.21622), accepted by *Statistics and Computing*
 
 
-## Description: ITE for nonlinear control and nonlinear treatment effect.
+## Overview
 
-Causal inference is a fundamental problem in many disciplines such as medicine, econometrics, and social science. Formally, let $\{(y_1,x_1,t_1), (y_2,x_2,t_2),\ldots, (y_n,x_n,t_n)\}$ denote a set of observations drawn from the following data-generating equations: 
+The goal is to construct **prediction intervals** for the **treatment effect**:
 
 $$
-y_i=c(x_i) +\tau(x_i) t_i+\sigma z_i,  \quad i=1,2,\ldots,n,
+\text{ITE}(\mathbf{x}) = Y(1;\mathbf{x}) - Y(0;\mathbf{x})
 $$
-where $\bx_i \in \mathbb{R}^d$ represents a vector of covariates of subject $i$, 
-$t_i \in \{0,1\}$ represents the treatment assignment to subject $i$; 
-$c(\cdot)$ represents the expected outcome of 
-subject $i$ if assigned to the control group (with $t_i=0)$, and $\tau(\bx_i)$ is the 
-expected treatment effect of subject $i$ if assigned to the treatment group (with $t_i=1$); $\sigma>0$ is the standard deviation,  and $z_i$ represent a standardized  random error that is not necessarily Gaussian.
+
+We assume the data-generating model:
+
+$$
+Y = c(\mathbf{x}) + T \cdot \tau(\mathbf{x}) + \sigma Z,
+$$
+
+where $c(\mathbf{x})$: baseline function, $\tau(\mathbf{x})$: treatment effect function, $\sigma$: noise scale and $Z \sim \mathcal{N}(0,1)$
+
+These components are modeled using deep neural networks:
+
+- The **c-network** models $c(\mathbf{x})$ with parameters $\boldsymbol{\theta}_c$
+- The **τ-network** models $\tau(\mathbf{x})$ with parameters $\boldsymbol{\theta}_\tau$
+- The **inverse network** models the mapping $\boldsymbol{\theta} = g(y, T, \mathbf{x}, z)$ with parameters $\mathbf{w}_n$. 
+
+Note. Although the method involves several neural networks, **only the parameters $\mathbf{w}_n$ of the inverse network are directly updated** via EFI framework. For EFI, please refer [Extended Fiducial Inference: Toward an Automated Process of Statistical Inference](https://arxiv.org/abs/2407.21622) and related [code](https://github.com/sehwankimstat/EFI). The parameters of the c- and τ-networks are **derived** from $\mathbf{w}_n$ from $g(y, T, \mathbf{x}, z)$. 
+
+## Constructing Prediction Intervals for ITE
+
+For the $k$-th iteration of the EFI algorithm, a new set of parameters $\boldsymbol{\theta}^{(k)}$ is imputed from the inverse network, producing a different realization of the treatment effect.
+
+Given a test set of size $n_{\text{test}}$, each subject falls into one of the following categories:
+
+### 1. Case: Control Outcome Observed ( $i \in \mathcal{I}_c$ )
+
+- Observed: $Y_i^{obs}(0)$ and $x_i$
+- Simulate:
+
+$$
+\hat{Y}_i^{(k)}(1) = \hat{c}^{(k)}(\mathbf{x}_i) + \hat{\tau}^{(k)}(\mathbf{x}_i) + \hat{\sigma}^{(k)} Z^{(k,1)}, \quad Z^{(k,1)} \sim \mathcal{N}(0,1)
+$$
+
+- Compute prediction interval for:
+
+$$
+{\hat{Y}_i(1)^{(k)} - Y_i^{obs}(0)}_{k=1}^{K}
+$$
+
+### 2. Case: Treatment Outcome Observed ( \( i \in \mathcal{I}_t \) )
+
+- Observed: \( Y_i^{obs}(1) \) and $x_i$
+- Simulate:
+  
+$$
+\hat{Y}_i^{(k)}(0) = \hat{c}^{(k)}(\mathbf{x}_i) + \hat{\sigma}^{(k)} Z^{(k,2)}, \quad Z^{(k,2)} \sim \mathcal{N}(0,1)
+$$
+
+- Compute prediction interval for:
+
+$$
+Y_i^{obs}(1) - Y_i(0)
+$$
+
+### 3. Case: Only Covariates Observed ( \( i \in \mathcal{I}_m \) )
+
+- Observed: Only $x_i$
+- Simulate:
+  
+$$
+\hat{Y}_i^{(k)}(1) - \hat{Y}_i^{(k)}(0) = \hat{\tau}^{(k)}(\mathbf{x}_i) + \sqrt{2} \hat{\sigma}^{(k)} Z^{(k,3)}, \quad Z^{(k,3)} \sim \mathcal{N}(0,1)
+$$
+
+- Compute prediction interval directly for:
+
+$$
+Y_i(1) - Y_i(0)
+$$
 
 
-The ITE is often defined as the conditional average treatment effect (CATE):   
-\begin{equation} \label{CATEeq}
-\tau(\bx)=\mathbb{E}(Y|T=1,\bx)-\mathbb{E}(Y|T=0,\bx),
-\end{equation}
-see e.g., \cite{shalit2017pehe} and \cite{Lu2018EstimatingIT}. 
-Recently, \cite{lei2021ite} proposed to make 
-predictive inference of the ITE by quantifying the uncertainty of 
-\begin{equation} \label{ITEeq}
-\tilde{\tau}_i:=Y(T=1,\bx_i)-Y(T=0,\bx_i):=Y_i(1)-Y_i(0),
-\end{equation}
-where $Y_i(t_i)$ denotes the potential outcome of subject  
-$i$ with treatment assignment $t_i \in \{0,1\}$. Henceforth, we will call $\tilde{\tau}_i$ the predictive ITE.  
-
-
-
-<p align="center">
-    <img src="img/LR_example.png" width=600>
-</p>
-
-The above figure presents the results of EFI on Linear Regression: (left) a scatter plot of $\hat{z}_{i}$ (y-axis) versus $z_i$ (x-axis), (middle) a Q-Q plot of $\hat{z}_i$ and $z_i$, and (right) confidence intervals of $\beta_1$ produced by EFI and OLS.
-
-The left panel shows that the imputed random error is quite similar to the true unknown random error. The middle panel demonstrates that the imputed random error exhibits similar distributional behavior to the true random errors. The right panel indicates that the inference from EFI is comparable to that of MLE, Bayes (with objective prior), and Generalized Fiducial Inference.
 
