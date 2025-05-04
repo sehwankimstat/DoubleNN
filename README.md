@@ -1,7 +1,7 @@
 Extended Fiducial Inference for Individual Treatment Effects via Deep Neural Networks
 ===============
 
-This code implements the Double Neural Network (Double-NN) method for individual treatment effect (ITE) estimation within the framework of Extended Fiducial Inference (EFI), developed by Sehwan Kim and Faming Liang. The method uses deep neural networks to model both treatment and control outcome functions, with an additional network for parameter estimation. Leveraging the EFI framework enables principled uncertainty quantification without requiring reference distributions. Numerical experiments show that the Double-NN method outperforms conformal quantile regression (CQR) in ITE estimation tasks, offering both improved accuracy and a rigorous foundation for inference in deep learning-based models.
+This code implements the Double Neural Network (Double-NN) method for individual treatment effect (ITE) estimation within the framework of Extended Fiducial Inference (EFI), developed by Sehwan Kim and Faming Liang. The method uses deep neural networks to model both treatment and control outcome functions, with an additional network for parameter estimation. Leveraging the EFI framework enables principled uncertainty quantification without requiring reference distributions. Numerical experiments show that the Double-NN method outperforms conformal quantile regression (CQR) in statistical inference for ITE.
 
 ## Related Publication
 
