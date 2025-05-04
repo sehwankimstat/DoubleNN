@@ -50,10 +50,10 @@ $$
 - Compute prediction interval for:
 
 $$
-{\hat{Y}_i(1)^{(k)} - Y_i^{obs}(0)}_{k=1}^{K}
+\hat{Y}_i(1)^{(k)} - Y_i^{obs}(0),\quad \text{for } k=1,\ldots,K 
 $$
 
-### 2. Case: Treatment Outcome Observed ( \( i \in \mathcal{I}_t \) )
+### 2. Case: Treatment Outcome Observed ( $i \in \mathcal{I}_t$ )
 
 - Observed: \( Y_i^{obs}(1) \) and $x_i$
 - Simulate:
@@ -65,10 +65,10 @@ $$
 - Compute prediction interval for:
 
 $$
-Y_i^{obs}(1) - Y_i(0)
+Y_i^{obs}(1) - \hat{Y}_i(0)^{(k)},\quad \text{for } k=1,\ldots,K 
 $$
 
-### 3. Case: Only Covariates Observed ( \( i \in \mathcal{I}_m \) )
+### 3. Case: Only Covariates Observed ( $i \in \mathcal{I}_m$ )
 
 - Observed: Only $x_i$
 - Simulate:
@@ -80,7 +80,7 @@ $$
 - Compute prediction interval directly for:
 
 $$
-Y_i(1) - Y_i(0)
+\hat{Y}_i^{(k)}(1) - \hat{Y}_i^{(k)}(0),\quad \text{for } k=1,\ldots,K 
 $$
 
 
