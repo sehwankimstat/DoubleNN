@@ -28,7 +28,7 @@ These components are modeled using deep neural networks:
 
 - The **c-network** models $c(\mathbf{x})$ with parameters $\boldsymbol{\theta}_c$
 - The **$\tau$-network** models $\tau(\mathbf{x})$ with parameters $\boldsymbol{\theta}_\tau$
-- The **inverse network** models the mapping $\boldsymbol{\theta} = g(y, T, \mathbf{x}, z)$ with parameters $\mathbf{w}_n$ for $\theta=(\theta__c,\theta_{\tau},\sigma)$. 
+- The **inverse network** models the mapping $\boldsymbol{\theta} = g(y, T, \mathbf{x}, z)$ with parameters $\mathbf{w}_n$
 
 Note. Although the method involves several neural networks, **only the parameters $\mathbf{w}_n$ of the inverse network are directly updated** via EFI framework. For EFI, please refer [Extended Fiducial Inference: Toward an Automated Process of Statistical Inference](https://arxiv.org/abs/2407.21622) and related [code](https://github.com/sehwankimstat/EFI). The parameters of the c- and $\tau$-networks are **derived** from $\mathbf{w}_n$ from $g(y, T, \mathbf{x}, z)$. 
 
