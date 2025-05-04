@@ -83,5 +83,16 @@ $$
 \hat{Y}_i^{(k)}(1) - \hat{Y}_i^{(k)}(0),\quad \text{for } k=1,\ldots,K 
 $$
 
+## Results
+
+The notebook `DoubleNN_nonlinear_nonlinear.ipynb`.describes the application of Double NN to the nonlinear $c(\cdot)$ and nonlinear $\tau(\cdot). Please refer the further detail.
+
+<p align="center">
+    <img src="img/LR_example.png" width=600>
+</p>
+
+The above figure presents the results of EFI on Linear Regression: (left) a scatter plot of $\hat{z}_{i}$ (y-axis) versus $z_i$ (x-axis), (middle) a Q-Q plot of $\hat{z}_i$ and $z_i$, and (right) confidence intervals of $\beta_1$ produced by EFI and OLS.
+
+The left panel shows that the imputed random error is quite similar to the true unknown random error. The middle panel demonstrates that the imputed random error exhibits similar distributional behavior to the true random errors. The right panel indicates that the inference from EFI is comparable to that of MLE, Bayes (with objective prior), and Generalized Fiducial Inference.
 
 
