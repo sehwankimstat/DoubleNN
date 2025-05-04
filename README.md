@@ -88,7 +88,7 @@ $$
 The notebook `DoubleNN_nonlinear_nonlinear.ipynb`.describes the application of Double NN to the nonlinear $c(\cdot)$ and nonlinear $\tau(\cdot). Please refer the further detail.
 
 <p align="center">
-    <img src="img/LR_example.png" width=600>
+    <img src="DoubleNN_example.png" width=600>
 </p>
 
 The above figure presents the results of EFI on Linear Regression: (left) a scatter plot of $\hat{z}_{i}$ (y-axis) versus $z_i$ (x-axis), (middle) a Q-Q plot of $\hat{z}_i$ and $z_i$, and (right) confidence intervals of $\beta_1$ produced by EFI and OLS.
