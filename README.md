@@ -5,8 +5,7 @@ This code implements the Double Neural Network (Double-NN) method for individual
 
 ## Related Publication
 
-Sehwan Kim, and Faming Liang (2025+), [Extended Fiducial Inference for Individual Treatment Effects via Deep Neural Networks](https://arxiv.org/abs/2407.21622), accepted by *Statistics and Computing*
-
+Sehwan Kim, and Faming Liang (2025+), [Extended Fiducial Inference for Individual Treatment Effects via Deep Neural Networks](https://arxiv.org/abs/2505.01995), accepted by *Statistics and Computing*
 
 ## Overview
 
