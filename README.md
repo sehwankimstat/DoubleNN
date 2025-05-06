@@ -84,14 +84,15 @@ $$
 
 ## Results
 
-The notebook `DoubleNN_nonlinear_nonlinear.ipynb`.describes the application of Double NN to the nonlinear $c(\cdot)$ and nonlinear $\tau(\cdot). Please refer the further detail.
+The notebook `DoubleNN_nonlinear_nonlinear.ipynb`.describes the application of Double NN to the nonlinear $c(\cdot)$ and nonlinear $\tau(\cdot)$. Please refer Section 5 at [Extended Fiducial Inference for Individual Treatment Effects via Deep Neural Networks](https://arxiv.org/abs/2505.01995) for further detail.
 
 <p align="center">
     <img src="DoubleNN_example.png" width=600>
 </p>
 
-The above figure presents the results of EFI on Linear Regression: (left) a scatter plot of $\hat{z}_{i}$ (y-axis) versus $z_i$ (x-axis), (middle) a Q-Q plot of $\hat{z}_i$ and $z_i$, and (right) confidence intervals of $\beta_1$ produced by EFI and OLS.
+The above figure presents the results of Double-NN: (left) a scatter plot of $\hat{z}_{i}$ (y-axis) versus $z_i$ (x-axis), (middle=left) a Q-Q plot of $\hat{z}_i$ and $z_i$, (middle-right) scatter plot of $\tau(x)$ and $\hat{\tau}(x)$ (right), and scatter plot of $c(x)$ and $\hat{c}(x)$
 
-The left panel shows that the imputed random error is quite similar to the true unknown random error. The middle panel demonstrates that the imputed random error exhibits similar distributional behavior to the true random errors. The right panel indicates that the inference from EFI is comparable to that of MLE, Bayes (with objective prior), and Generalized Fiducial Inference.
+The left panel shows that the imputed random errors closely match the true random errors. The middle-left panel demonstrates that the imputed errors exhibit a distributional behavior similar to that of the true errors. The middle-right and right panels indicate that neural networks trained using the Double-NN method can accurately estimate the true response surface. By collecting these values across iterations, one can construct confidence or prediction intervals for $c(\cdot)$ and $\tau(\cdot)$. 
+
 
 
